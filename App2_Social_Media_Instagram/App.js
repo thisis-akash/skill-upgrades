@@ -15,15 +15,20 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Title from './components/Title/Title';
 import globalStyle from './assets/styles/globalStyle';
 import UserStory from './components/UserStory/UserStory';
+import UserPost from './components/UserPost/UserPost';
 
 const APP_TITLE = `Let's Explore`;
 const initialState = {
   userStoriesFeedCurrentPage: 1,
   userStoriesFeedRenderedData: [],
-  isLoadingUserStoriesFeed: false
+  isLoadingUserStoriesFeed: false,
+  userPostsCurrentPage: 1,
+  userPostsRenderedData: [],
+  isLoadingUserPosts: false
 };
 
 function App() {
+  // Static data
   const userStories = [{
     id: 1,
     firstName: 'User 1',
@@ -62,19 +67,95 @@ function App() {
     profileImage: require('./assets/images/default_profile.png')
   }];
 
+  // Static data
+  const userPosts = [
+    {
+      firstName: 'Allison',
+      lastName: 'Becker',
+      location: 'Boston, MA',
+      likes: 1201,
+      comments: 24,
+      bookmarks: 55,
+      image: require('./assets/images/default_post.png'),
+      profileImage: require('./assets/images/default_profile.png'),
+      id: 1,
+    },
+    {
+      firstName: 'Jennifer',
+      lastName: 'Wilkson',
+      location: 'Worcester, MA',
+      likes: 1301,
+      comments: 25,
+      bookmarks: 70,
+      image: require('./assets/images/default_post.png'),
+      profileImage: require('./assets/images/default_profile.png'),
+      id: 2,
+    },
+    {
+      firstName: 'Adam',
+      lastName: 'Spera',
+      location: 'Worcester, MA',
+      likes: 100,
+      comments: 8,
+      bookmarks: 3,
+      image: require('./assets/images/default_post.png'),
+      profileImage: require('./assets/images/default_profile.png'),
+      id: 3,
+    },
+    {
+      firstName: 'Nata',
+      lastName: 'Vacheishvili',
+      location: 'New York, NY',
+      likes: 200,
+      comments: 16,
+      bookmarks: 6,
+      image: require('./assets/images/default_post.png'),
+      profileImage: require('./assets/images/default_profile.png'),
+      id: 4,
+    },
+    {
+      firstName: 'Nicolas',
+      lastName: 'Namoradze',
+      location: 'Berlin, Germany',
+      likes: 2000,
+      comments: 32,
+      bookmarks: 12,
+      image: require('./assets/images/default_post.png'),
+      profileImage: require('./assets/images/default_profile.png'),
+      id: 5,
+    },
+  ];
+
+  // State variable for user stories
   const storiesFeedPageSize = 4;
   const [userStoriesFeedCurrentPage, setUserStoriesFeedCurrentPage] = useState(initialState.userStoriesFeedCurrentPage);
   const [userStoriesFeedRenderedData, setUserStoriesFeedRenderedData] = useState(initialState.userStoriesFeedRenderedData);
   const [isLoadingUserStoriesFeed, setIsLoadingUserStoriesFeed] = useState(initialState.isLoadingUserStoriesFeed);
 
+  // State variable for user posts
+  const userPostsPageSize = 2;
+  const [userPostsCurrentPage, setUserPostsCurrentPage] = useState(initialState.userPostsCurrentPage);
+  const [userPostsRenderedData, setUserPostsRenderedData] = useState(initialState.userPostsRenderedData);
+  const [isLoadingUserPosts, setIsLoadingUserPosts] = useState(initialState.isLoadingUserPosts);
+
   useEffect(() => {
 
+    // User Stories
     setIsLoadingUserStoriesFeed(true);
 
-    const getInitialData = pagination(userStories, 1, storiesFeedPageSize);
-    setUserStoriesFeedRenderedData(getInitialData);
+    const getInitialUserStories = pagination(userStories, 1, storiesFeedPageSize);
+    setUserStoriesFeedRenderedData(getInitialUserStories);
 
     setIsLoadingUserStoriesFeed(false);
+
+
+    // User Posts
+    setIsLoadingUserPosts(true);
+
+    const getInitialPosts = pagination(userPosts, 1, userPostsPageSize);
+    setUserPostsRenderedData(getInitialPosts);
+
+    setIsLoadingUserPosts(false);
 
   }, []);
 
@@ -104,10 +185,27 @@ function App() {
     setIsLoadingUserStoriesFeed(false);
   }
 
-  return (
-    <SafeAreaView>
+  const loadMorePosts = () => {
+    if (isLoadingUserPosts) return;
 
+    setIsLoadingUserPosts(true);
 
+    const contentToAppend = pagination(
+      userPosts,
+      userPostsCurrentPage + 1,
+      userPostsPageSize,
+    );
+
+    if (contentToAppend.length) {
+      setUserPostsCurrentPage(userPostsPageSize + 1);
+      setUserPostsRenderedData(prev => [...prev, ...contentToAppend]);
+    }
+
+    setIsLoadingUserPosts(false);
+  }
+
+  const listHeaderComponent = (
+    <>
       <View style={globalStyle.header}>
 
 
@@ -134,13 +232,40 @@ function App() {
           renderItem={({ item }) => {
             const storyKey = `story_${item.id}`;
             return <UserStory key={storyKey} firstName={item.firstName} profileImage={item.profileImage} />
-          }} >
-
-        </FlatList>
+          }} />
 
 
       </View>
+    </>
+  );
 
+  return (
+    <SafeAreaView>
+
+      <View>
+
+
+        <FlatList data={userPostsRenderedData}
+          ListHeaderComponent={listHeaderComponent}
+          onEndReachedThreshold={0.5}
+          onEndReached={() => loadMorePosts()}
+          showsVerticalScrollIndicator={false}
+
+          renderItem={({ item }) => {
+            const postKey = `post_${item.id}`;
+            return (
+              <View style={globalStyle.userPostContainer}>
+                <UserPost
+                  profileImage={item.profileImage} image={item.image} location={item.location}
+                  firstName={item.firstName} lastName={item.lastName}
+                  likes={item.likes} bookmarks={item.bookmarks} comments={item.comments}
+                  key={postKey} />
+              </View>
+            );
+          }} />
+
+
+      </View>
 
     </SafeAreaView>
   );
