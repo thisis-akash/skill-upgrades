@@ -18,9 +18,9 @@ import UserStory from './components/UserStory/UserStory';
 
 const APP_TITLE = `Let's Explore`;
 const initialState = {
-  storiesFeedCurrentPage: 1,
-  storiesFeedRenderedData: [],
-  isLoadingStoriesFeed: false
+  userStoriesFeedCurrentPage: 1,
+  userStoriesFeedRenderedData: [],
+  isLoadingUserStoriesFeed: false
 };
 
 function App() {
@@ -63,18 +63,18 @@ function App() {
   }];
 
   const storiesFeedPageSize = 4;
-  const [storiesFeedCurrentPage, setStoriesFeedCurrentPage] = useState(initialState.storiesFeedCurrentPage);
-  const [storiesFeedRenderedData, setStoriesFeedRenderedData] = useState(initialState.storiesFeedRenderedData);
-  const [isLoadingStoriesFeed, setIsLoadingStoriesFeed] = useState(initialState.isLoadingStoriesFeed);
+  const [userStoriesFeedCurrentPage, setUserStoriesFeedCurrentPage] = useState(initialState.userStoriesFeedCurrentPage);
+  const [userStoriesFeedRenderedData, setUserStoriesFeedRenderedData] = useState(initialState.userStoriesFeedRenderedData);
+  const [isLoadingUserStoriesFeed, setIsLoadingUserStoriesFeed] = useState(initialState.isLoadingUserStoriesFeed);
 
   useEffect(() => {
 
-    setIsLoadingStoriesFeed(true);
+    setIsLoadingUserStoriesFeed(true);
 
     const getInitialData = pagination(userStories, 1, storiesFeedPageSize);
-    setStoriesFeedRenderedData(getInitialData);
+    setUserStoriesFeedRenderedData(getInitialData);
 
-    setIsLoadingStoriesFeed(false);
+    setIsLoadingUserStoriesFeed(false);
 
   }, []);
 
@@ -86,22 +86,22 @@ function App() {
   };
 
   const loadMoreStories = () => {
-    if (isLoadingStoriesFeed) return;
+    if (isLoadingUserStoriesFeed) return;
 
-    setIsLoadingStoriesFeed(true);
+    setIsLoadingUserStoriesFeed(true);
 
     const contentToAppend = pagination(
       userStories,
-      storiesFeedCurrentPage + 1,
+      userStoriesFeedCurrentPage + 1,
       storiesFeedPageSize,
     );
 
     if (contentToAppend.length) {
-      setStoriesFeedCurrentPage(storiesFeedPageSize + 1);
-      setStoriesFeedRenderedData(prev => [...prev, ...contentToAppend]);
+      setUserStoriesFeedCurrentPage(storiesFeedPageSize + 1);
+      setUserStoriesFeedRenderedData(prev => [...prev, ...contentToAppend]);
     }
 
-    setIsLoadingStoriesFeed(false);
+    setIsLoadingUserStoriesFeed(false);
   }
 
   return (
@@ -129,7 +129,7 @@ function App() {
           horizontal={true}
           onEndReachedThreshold={0.5}
           onEndReached={() => loadMoreStories()}
-          data={storiesFeedRenderedData}
+          data={userStoriesFeedRenderedData}
 
           renderItem={({ item }) => {
             const storyKey = `story_${item.id}`;
