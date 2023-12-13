@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 
 import style from './style';
 import UserProfileImage from '../UserProfileImage/UserProfileImage';
+import { horizontalScale } from '../../assets/styles/scaling';
 
 const UserStory = (props) => {
     const { firstName, profileImage } = props;
 
     return (
         <View style={style.storyContainer}>
-            <UserProfileImage imageDimensions={65} profileImage={profileImage} />
+            <UserProfileImage imageDimensions={horizontalScale(65)} profileImage={profileImage} />
             <Text style={style.firstName}>{firstName}</Text>
         </View>
     );

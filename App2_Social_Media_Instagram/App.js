@@ -16,6 +16,7 @@ import Title from './components/Title/Title';
 import globalStyle from './assets/styles/globalStyle';
 import UserStory from './components/UserStory/UserStory';
 import UserPost from './components/UserPost/UserPost';
+import { scaleFontSize } from './assets/styles/scaling';
 
 const APP_TITLE = `Let's Explore`;
 const initialState = {
@@ -212,7 +213,7 @@ function App() {
         <Title title={APP_TITLE} />
 
         <TouchableOpacity style={globalStyle.messageIcon}>
-          <FontAwesomeIcon icon={faEnvelope} color='#898DAE' size={20} />
+          <FontAwesomeIcon icon={faEnvelope} color='#898DAE' size={scaleFontSize(20)} />
         </TouchableOpacity>
 
 

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import style from './style';
 import UserProfileImage from '../UserProfileImage/UserProfileImage';
+import { horizontalScale, scaleFontSize } from '../../assets/styles/scaling';
 
 const UserPost = (props) => {
     const { profileImage, firstName, lastName, location, comments,
@@ -17,14 +18,14 @@ const UserPost = (props) => {
             <View style={style.user}>
 
                 <View style={style.userContainer}>
-                    <UserProfileImage imageDimensions={48} profileImage={profileImage} />
+                    <UserProfileImage imageDimensions={horizontalScale(48)} profileImage={profileImage} />
                     <View style={style.userTextContainer}>
                         <Text style={style.username}>{firstName} {lastName}</Text>
                         {location && (<Text style={style.location}>{location}</Text>)}
                     </View>
                 </View>
 
-                <FontAwesomeIcon icon={faEllipsisH} size={24} color={'#79869F'} />
+                <FontAwesomeIcon icon={faEllipsisH} size={scaleFontSize(24)} color={'#79869F'} />
 
             </View>
 
@@ -41,7 +42,7 @@ const UserPost = (props) => {
                     <Text style={style.userPostStatText}>{likes}</Text>
                 </View>
 
-                <View style={[style.userPostStatButton, { marginLeft: 27 }]}>
+                <View style={[style.userPostStatButton, { marginLeft: horizontalScale(27) }]}>
                     <FontAwesomeIcon icon={faMessage} color={'#79869F'} />
                     <Text style={style.userPostStatText}>
                         {comments}
