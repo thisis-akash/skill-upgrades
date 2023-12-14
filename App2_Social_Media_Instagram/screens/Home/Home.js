@@ -18,6 +18,7 @@ import UserStory from '../../components/UserStory/UserStory';
 import UserPost from '../../components/UserPost/UserPost';
 import { scaleFontSize } from '../../assets/styles/scaling';
 import globalStyle from '../../assets/styles/globalStyle';
+import { Routes } from '../../navigation/Routes';
 
 const APP_TITLE = `Let's Explore`;
 const initialState = {
@@ -29,7 +30,10 @@ const initialState = {
   isLoadingUserPosts: false
 };
 
-function Home() {
+function Home(props) {
+
+  const { navigation } = props;
+
   // Static data
   const userStories = [{
     id: 1,
@@ -213,7 +217,7 @@ function Home() {
 
         <Title title={APP_TITLE} />
 
-        <TouchableOpacity style={style.messageIcon}>
+        <TouchableOpacity style={style.messageIcon} onPress={() => navigation.navigate(Routes.Profile)} >
           <FontAwesomeIcon icon={faEnvelope} color='#898DAE' size={scaleFontSize(20)} />
         </TouchableOpacity>
 
