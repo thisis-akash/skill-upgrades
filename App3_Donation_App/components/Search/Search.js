@@ -20,7 +20,7 @@ const Search = props => {
         setSearch(searchValue);
         props.onSearch(searchValue);
     };
-    
+
     return (
         <Pressable style={style.searchInputContainer} onPress={handleFocus}>
             <FontAwesomeIcon
@@ -29,6 +29,7 @@ const Search = props => {
                 size={scaleFontSize(22)}
             />
             <TextInput
+                placeholder={props.placeholder}
                 ref={textInputRef}
                 style={style.searchInput}
                 value={search}
@@ -41,10 +42,12 @@ const Search = props => {
 
 Search.defaultProps = {
     onSearch: () => { },
+    placeholder: 'Search',
 };
 
 Search.propTypes = {
     onPress: PropTypes.func,
+    placeholder: PropTypes.string,
 };
 
 export default Search;
