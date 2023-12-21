@@ -5,10 +5,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import User from './reducers/User';
 import Categories from './reducers/Categories';
+import Donations from './reducers/Donations';
 
 const rootReducer = combineReducers({
     user: User,
-    categories: Categories
+    categories: Categories,
+    donations: Donations
 });
 
 const configuration = {
