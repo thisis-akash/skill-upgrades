@@ -17,6 +17,8 @@ import { updateSelectedCategoryId } from '../../redux/reducers/Categories';
 import SingleDonationItem from '../../components/SingleDonationItem/SingleDonationItem';
 import { Routes } from '../../navigation/Routes';
 import { updateSelectedDonationId } from '../../redux/reducers/Donations';
+import { resetToInitialState } from '../../redux/reducers/User';
+import { logOut } from '../../api/User';
 
 import style from './style';
 
@@ -28,7 +30,7 @@ const Home = (props) => {
     const categories = useSelector(state => state.categories);
     const donations = useSelector(state => state.donations);
 
-    const homePageTitle = `${user.firstName} ${user.lastName[0]}. 👋`;
+    const homePageTitle = `${user.displayName} 👋`;
 
     const [categoryPage, setCategoryPage] = useState(1);
     const [categoryList, setCategoryList] = useState([]);
@@ -79,6 +81,13 @@ const Home = (props) => {
         setIsLoadingCategories(false);
     }
 
+    const onLogout = async () => {
+        dispatch(resetToInitialState());
+        await logOut();
+
+        props.navigation.navigate(Routes.Login);
+    }
+
     const donationsListing = (
         <View style={style.donationItemsContainer}>
 
@@ -123,11 +132,17 @@ const Home = (props) => {
                             />
                         </View>
                     </View>
-                    <Image
-                        source={{ uri: user.profileImage }}
-                        style={style.profileImage}
-                        resizeMode={'contain'}
-                    />
+                    <View>
+                        <Image
+                            source={{ uri: user.profileImage }}
+                            style={style.profileImage}
+                            resizeMode={'contain'}
+                        />
+                        <Pressable
+                            onPress={() => onLogout()} >
+                            <Header type={3} title={'Logout'} color={'#156CF7'} />
+                        </Pressable>
+                    </View>
                 </View>
 
 

@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import { SafeAreaView, ScrollView, Pressable, View, Text } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import Input from '../../components/Input/Input';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import { Routes } from '../../navigation/Routes';
 import { loginUser } from '../../api/User';
+import { logIn } from '../../redux/reducers/User';
 
 import globalStyle from '../../assets/styles/globalStyle';
 import style from './style';
 
 const Login = (props) => {
+
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -23,6 +27,7 @@ const Login = (props) => {
             setError(user.error);
         } else {
             setError('');
+            dispatch(logIn(user.data));
             props.navigation.navigate(Routes.Home);
         }
 
