@@ -213,11 +213,11 @@ const Donations = createSlice({
 
     reducers: {
         resetDonations: () => initialState,
-        
+
         updateSelectedDonationId: (state, action) => {
             state.selectedDonationId = action.payload;
-            state.selectedDonationInformation = state.items.find(
-                item => item.donationItemId === action.payload,
+                        state.selectedDonationInformation = state.items.find(
+                item => item.donationItemId === action.payload
             );
         },
     },

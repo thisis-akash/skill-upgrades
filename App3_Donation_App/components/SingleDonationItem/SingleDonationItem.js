@@ -7,7 +7,7 @@ import Header from '../Header/Header';
 import style from './style';
 
 const SingleDonationItem = props => {
-
+    
     return (
         <Pressable onPress={() => {
             props.onPress(props.donationItemId);

@@ -43,7 +43,7 @@ const Home = (props) => {
 
         setIsLoadingCategories(true);
         setCategoryList(
-            pagination(categories.categories, categoryPage, categoryPageSize),
+            pagination(categories.categories, categoryPage, categoryPageSize)
         );
         setCategoryPage(prev => prev + 1);
         setIsLoadingCategories(false);
@@ -52,10 +52,10 @@ const Home = (props) => {
 
     useEffect(() => {
         const items = donations.items.filter(value =>
-            value.categoryIds.includes(categories.selectedCategoryId),
+            value.categoryIds.includes(categories.selectedCategoryId)
         );
         setDonationItems(items);
-    }, [categories.selectedCategoryId]);
+            }, [categories.selectedCategoryId]);
 
     const pagination = (items, pageNumber, pageSize) => {
         const startIndex = (pageNumber - 1) * pageSize;
@@ -93,9 +93,9 @@ const Home = (props) => {
 
             {donationItems.map(value => {
                 const categoryInformation = categories.categories.find(
-                    val => val.categoryId === categories.selectedCategoryId,
+                    val => val.categoryId === categories.selectedCategoryId
                 );
-                return (
+                                return (
                     <View
                         key={value.donationItemId}
                         style={style.singleDonationItem}>

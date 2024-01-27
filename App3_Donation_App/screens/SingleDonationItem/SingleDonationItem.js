@@ -19,12 +19,11 @@ const SingleDonationItem = (props) => {
 
     const categoryInformation = props.route.params.categoryInformation;
 
-    const onDonate = () => {
+        const onDonate = () => {
         Alert.alert('', 'Donation Successful!', [
             { text: 'OK', onPress: () => props.navigation.navigate(Routes.Home) },
         ]);
     }
-
     return (
         <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
 
@@ -50,13 +49,16 @@ const SingleDonationItem = (props) => {
 
 
             <View style={style.button}>
-                <Button title={'Donate'} onPress={() => onDonate()} />
+                <Button
+                    title={'Donate'}
+                    onPress={() => props.navigation.navigate(Routes.Payment)}
+                />
             </View>
 
 
         </SafeAreaView>
     );
-    
+
 };
 
 export default SingleDonationItem;
