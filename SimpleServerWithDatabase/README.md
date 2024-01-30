@@ -1,2 +1,2 @@
-# To run the application
-docker-compose up --build
+# To run the application  
+docker-compose up --build  
